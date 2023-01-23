@@ -101,6 +101,9 @@ void DestroyGrafo(GRAFO* g) {
 	delete g;
 }
 
+/*
+* procedimento que imprimi o grafo
+*/
 void GrafoShow(GRAFO* g) {
 	for (int i = 0; i < g->v; i++) {
 		std::cout << i << ": ";
@@ -111,6 +114,9 @@ void GrafoShow(GRAFO* g) {
 	}
 }
 
+/*
+* Função que calcula o grau de saída do vertice
+*/
 int GrafoOutDeg(GRAFO* g, int v) {
 	int o = 0;
 	for (NODE* a = g->n[v]; a != nullptr; a = a->prox)
@@ -118,11 +124,17 @@ int GrafoOutDeg(GRAFO* g, int v) {
 	return o;
 }
 
+/*
+* Função que calcula a distância entre dois pontos (x, y)
+*/
 int dist(points a1, points a2) {
 	double d = sqrt(pow(a1.x - a2.x, 2) + pow(a1.y - a2.y, 2));
 	return floor(d);
 }
 
+/*
+* Procedimento que verifica se a distância entre as duas antenas é maior que o raio de alcance. 
+*/
 void IsReachable(GRAFO *g, int idx1, int idx2) {
 	int d = dist(g->p[idx1], g->p[idx2]);
 	if (d > g->p[idx1].r)
@@ -182,7 +194,7 @@ static void AuxDFS( GRAFO* G, int v, int *pre, int *post, int *pa) {
    for (NODE* a = G->n[v]; a != NULL; a = a->prox)
       if (pre[a->num] == -1) {
          pa[a->num] = v; 
-         DFS( G, a->num, pre, post, pa); 
+         AuxDFS( G, a->num, pre, post, pa); 
       } 
    post[v] = cntt++;
 }
@@ -199,21 +211,20 @@ void DFS( GRAFO* G, int *pre, int *post, int *pa) {
    for (int x = 0; x < G->v; ++x)
       if (pre[x] == -1) {
          pa[x] = x;
-         DFS( G, x, pre, post, pa); // nova etapa
+         AuxDFS( G, x, pre, post, pa); // nova etapa
       }
 }
 
 /*
 * Função BFS (Breadth-first search)
 */
-
 static void GrafoBFS( GRAFO* G, int s, int num[], int pa[]) { 
    for (int x = 0; x < G->v; ++x) 
       num[x] = -1;
    int c = 0;
    num[s] = c++;
    pa[s] = s;
-   QUEUEinit( G->v);
+   QUEUEinit(G->v);
    QUEUEput( s); 
    while (!QUEUEempty( )) {
       int x = QUEUEget( ); 
@@ -224,7 +235,7 @@ static void GrafoBFS( GRAFO* G, int s, int num[], int pa[]) {
             QUEUEput( a->num); 
          }
    }
-   QUEUEfree( ); 
+   QUEUEfree(); 
 }
 
 /*
@@ -316,7 +327,6 @@ int BellmanFord( GRAFO* G, int s, int *pa, int *dist) {
 /*
 * Função de Prim
 */
-
 int Prim( GRAFO* G, int pa[]) { 
    for (int w = 0; w < G->v; ++w) pa[w] = -1; 
    int s = 0;
@@ -343,7 +353,6 @@ int Prim( GRAFO* G, int pa[]) {
 /*
 * Criação de um vértice auxiliar para Kruskal
 */
-
 typedef struct { 
     int v; 
     int w; 
@@ -358,8 +367,6 @@ static edge EDGE( int v, int w, int c) {
 /*
 * Função de Kruskal
 */
-
-
 int Kruskal( GRAFO* G, edge mst[]) { 
    int *chefe =(int *) malloc(G->v * sizeof (int));
    for (int x = 0; x < G->v; ++x) 
