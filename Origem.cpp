@@ -428,7 +428,7 @@ int main(int argc, char **argv) {
 	GRAFO* g; 
 	while (true) {
 		std::cin >> n;
-		if (!n) return -1;
+		if (!n) return 0;
 
 		g = GrafoInit(n);
 		//loop para inserir as coordenadas das antenas
