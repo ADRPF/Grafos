@@ -3,6 +3,30 @@
 
 struct points { int x; int y; int r; };
 
+static int *queue; 
+static int begin, end;
+
+void QUEUEinit( int N) { 
+   queue = (int *)malloc( N * sizeof (int));
+   begin = end = 0; 
+}
+
+int QUEUEempty( void) { 
+   return begin == end; 
+}
+
+void QUEUEput( int v) {
+   queue[end++] = v;
+}
+
+int QUEUEget( void) { 
+   return queue[begin++];
+}
+
+void QUEUEfree( void) {
+   free( queue);
+}
+
 typedef struct Node {
 	int num; //número do vértice
 	int dist; // peso da aresta
