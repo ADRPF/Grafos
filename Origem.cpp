@@ -1,10 +1,22 @@
 #include <iostream>
 #include <cmath>
 
-struct points { int x; int y; int r; };
-
+static struct points { int x; int y; int r; };
 static int *queue; 
 static int begin, end;
+
+typedef struct Node {
+    int num; //número do vértice
+    int dist; // peso da aresta
+    struct Node* prox; // próximo nó
+}NODE;
+
+typedef struct Grafo {
+    int v; // número de vertices do grafo
+    int a; // número de arcos do grafo
+    points* p;
+    NODE** n;
+}GRAFO;
 
 void QUEUEinit( int N) { 
    queue = (int *)malloc( N * sizeof (int));
@@ -26,19 +38,6 @@ int QUEUEget( void) {
 void QUEUEfree( void) {
    free( queue);
 }
-
-typedef struct Node {
-	int num; //número do vértice
-	int dist; // peso da aresta
-	struct Node* prox; // próximo nó
-}NODE;
-
-typedef struct Grafo {
-	int v; // número de vertices do grafo
-	int a; // número de arcos do grafo
-	points* p;
-	NODE** n;   
-}GRAFO;
 
 /*
 * Função de inicialização do grafo, passando o número de vertices como parâmetro
@@ -445,6 +444,8 @@ int main(int argc, char **argv) {
 			std::cin >> idx1 >> idx2;
 			IsReachable(g, idx1-1, idx2-1);
 		}
+        GrafoShow(g);
+        std::cin; 
 		DestroyGrafo(g);
 	}
 
