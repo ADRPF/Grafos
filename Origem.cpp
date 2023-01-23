@@ -210,32 +210,26 @@ bool All_Circuito( GRAFO* G) {
 /*
 * Função Auxiliar de DFS
 */
-static void AuxDFS( GRAFO* G, int v, int *pre, int *post, int *pa) { 
-   int cnt = 0;
-   int cntt = 0;
-   pre[v] = cnt++; 
-   for (NODE* a = G->n[v]; a != NULL; a = a->prox)
-      if (pre[a->num] == -1) {
-         pa[a->num] = v; 
-         AuxDFS( G, a->num, pre, post, pa); 
-      } 
-   post[v] = cntt++;
+static void dfsR( GRAFO* G, int v) { 
+   pre[x] = cnt++; 
+   for (NODE* a = G->n[x]; a != NULL; a = a->prox) {
+      int num = a->w+num;
+      if (pre[num] == -1)
+         dfsR( G, num); 
+   }
 }
 
 /*
 * Função DFS (Depth-first search)
 */
 
-void DFS( GRAFO* G, int *pre, int *post, int *pa) { 
+void DFS( GRAFO* G) { 
    int cnt = 0;
-   int cntt = 0; 
    for (int x = 0; x < G->v; ++x) 
-      pre[x] = post[x] = -1; // A
+      pre[x] = -1;
    for (int x = 0; x < G->v; ++x)
-      if (pre[x] == -1) {
-         pa[x] = x;
-         AuxDFS( G, x, pre, post, pa); // nova etapa
-      }
+      if (pre[x] == -1) 
+         dfsR( G, x); // começa nova etapa
 }
 
 /*
